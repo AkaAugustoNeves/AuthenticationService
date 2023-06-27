@@ -36,6 +36,17 @@ services:
     depends_on:
       - db-person
       - ms-eureka-server
+  
+  ms-gateway:
+    container_name: ms-gateway
+    build: ./ms-gateway
+    restart: always
+    ports:
+      - "80:80"
+    networks:
+      - ms
+    depends_on:
+      - ms-eureka-server
       
 networks:
   ms:
