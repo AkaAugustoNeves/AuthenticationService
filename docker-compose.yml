@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  app_port_project:
+    container_name: app_port_project
+    build: ./ms-eureka-server
+    ports:
+      - "8761:8761"
+    restart: always
+    networks:
+      - ms
+      
+networks:
+  ms:
+    driver: bridge
