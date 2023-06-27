@@ -1,15 +1,44 @@
 version: '3.7'
 
 services:
-  app_port_project:
-    container_name: app_port_project
+  ms-eureka-server:
+    container_name: ms-eureka-server
     build: ./ms-eureka-server
     ports:
       - "8761:8761"
     restart: always
     networks:
       - ms
+
+  db-person:
+    container_name: db-person
+    image: postgres
+    environment:
+      - POSTGRES_DB=db-person
+      - POSTGRES_USER=db-person
+      - POSTGRES_PASSWORD=db-person
+      - PGDATA=/data/postgres
+    volumes:
+      - ./volume/v_db_person:/data/postgres
+    ports:
+      - "5400:5432"
+    networks:
+      - db
+    restart: unless-stopped
+
+  ms-person:
+    container_name: ms-person
+    build: ./ms-person
+    restart: always
+    networks:
+      - ms
+      - db
+    depends_on:
+      - db-person
+      - ms-eureka-server
       
 networks:
   ms:
+    driver: bridge
+  db:
     driver: bridge

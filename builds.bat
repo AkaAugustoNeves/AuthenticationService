@@ -1,3 +1,7 @@
 cd ms-eureka-server 
 
-start build.bat 
+start build.bat
+
+cd ../ms-person
+
+start build.bat
